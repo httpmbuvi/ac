@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | ANCO CREATIONS</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .login-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;}
+        .btn { width: 100%; padding: 10px; background: var(--primary-color, #007bff); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;}
+        .error { color: red; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO CREATIONS</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="services.html" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="services.html#rate-card" class="nav__link">Our Rate Card</a></li>
+                    <li class="nav__item"><a href="skills.html" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle"><i class="fas fa-bars"></i><i class="fas fa-times"></i></div>
+            <i class="fas fa-moon theme-toggle"></i>
+        </nav>
+    </header>
+    <div class="login-card">
+        <h2>Admin Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" class="form-control" required placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" class="form-control" required placeholder="Enter admin password">
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <p id="error-msg" class="error">Invalid Password</p>
+            <p style="margin-top: 1rem;">Don't have an account? <a href="register.html">Sign Up</a></p>
+        </form>
+    </div>
+
+    <script>
+        // If already logged in, go to admin
+        // Note: PHP sessions are handled server-side, so we rely on the redirect 
+        // from the login process, but we can't easily check session here without an API call.
+        // We proceed to show login form.
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            try {
+                // Post to PHP script
+                const res = await fetch('login_process.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    // Set flag for script.js to show menu link
+                    localStorage.setItem('isAdmin', 'true');
+                    window.location.href = 'admin.html';
+                } else {
+                    errorMsg.innerText = data.message || 'Invalid login credentials';
+                    errorMsg.style.display = 'block';
+                }
+            } catch (err) {
+                console.error(err);
+                errorMsg.innerText = 'Connection Failed. Is the server running?';
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

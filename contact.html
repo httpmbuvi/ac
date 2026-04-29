@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ANCO CREATIONS</title>
+    <link rel="icon" href="https://i.imgur.com/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .map-container {
+            border-radius: .75rem;
+            overflow: hidden;
+            border: 1px solid #3a4b66;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            height: 400px;
+            width: 100%;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            /* This filter gives the map a dark theme look. Remove if you prefer the default. */
+            filter: grayscale(1) invert(0.9) contrast(0.8);
+        }
+
+        /* FAQ Section Styles */
+        .faq-item {
+            background-color: var(--container-color);
+            border: 1px solid #3a4b66;
+            border-radius: .5rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--title-color);
+        }
+
+        .faq-question .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px; /* Adjust as needed for longer answers */
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO CREATIONS</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="services.html" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="services.html#rate-card" class="nav__link">Our Rate Card</a></li>
+                    <li class="nav__item"><a href="skills.html" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="contact.html" class="nav__link active-link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle"><i class="fas fa-bars"></i><i class="fas fa-times"></i></div>
+            <i class="fas fa-moon theme-toggle"></i>
+        </nav>
+    </header>
+    <main>
+        <section id="contact" class="contact section">
+            <h2 class="section__title">Get In Touch</h2>
+            <div class="contact__container container grid">
+                <div class="contact__content">
+                    <p class="contact__description">We are currently available for new projects and collaborations. Feel free to reach out to discuss how we can help you succeed!</p>
+                    <div class="contact__info">
+                        <div class="contact__info-item"><i class="fas fa-envelope"></i><a href="mailto:thomasantony372@gmail.com">thomasantony372@gmail.com</a></div>
+                        <div class="contact__info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <span style="display:block; font-size: 0.8rem; color: var(--text-color);">Official Email</span>
+                                <a href="mailto:anco.creations@outlook.com">anco.creations@outlook.com</a>
+                            </div>
+                        </div>
+                        <div class="contact__info-item"><i class="fas fa-phone"></i><a href="tel:+254745282806">0745 282 806</a></div>
+                        <div class="contact__info-item">
+                            <i class="fas fa-clock"></i>
+                            <div style="text-align: left;">
+                                <span style="display:block; font-weight: 600; color: var(--title-color);">Business Hours</span>
+                                <span style="display:block; font-size: 0.9rem; color: var(--text-color);">Mon - Fri: 9:00 AM - 5:00 PM</span>
+                                <span style="display:block; font-size: 0.9rem; color: var(--text-color);">Saturday: 10:00 AM - 2:00 PM</span>
+                                <span style="display:block; font-size: 0.9rem; color: var(--text-color);">Sunday: Closed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact__social"><a href="https://wa.me/254745282806?text=Hello%20Anco%20Creations!%20I'm%20interested%20in%20your%20services." target="_blank"><i class="fab fa-whatsapp"></i></a></div>
+                </div>
+                <form class="contact__form" id="contact-form">
+                    <div class="contact__form-div"><label class="contact__form-tag">Name</label><input type="text" id="contact-name" name="name" class="contact__form-input" placeholder="Insert your name" required></div>
+                    <div class="contact__form-div"><label class="contact__form-tag">Email</label><input type="email" id="contact-email" name="email" class="contact__form-input" placeholder="Insert your email" required></div>
+                    <div class="contact__form-div contact__form-area"><label class="contact__form-tag">Project</label><textarea id="contact-project" name="project" cols="30" rows="10" class="contact__form-input" placeholder="Write your project" required></textarea></div>
+                    <button type="submit" class="button button--primary">Send via WhatsApp <i class="fab fa-whatsapp"></i></button>
+                    <div id="form-status" style="margin-top: 1rem; text-align: center; font-weight: 500;"></div>
+                </form>
+
+                <!-- Google Map Section -->
+                <div style="margin-top: 4rem; width: 100%; max-width: 700px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--title-color); text-align: center;">Our Location</h3>
+                    <div class="map-container">
+                        <!-- 
+                            PASTE YOUR GOOGLE MAPS IFRAME CODE HERE.
+                            The code below is just a placeholder for Nairobi.
+                        -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.3586901239!2d36.68257938124999!3d-1.3028612000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b29796fd!2sNairobi!5e0!3m2!1sen!2ske!4v1663584838483!5m2!1sen!2ske" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div style="margin-top: 4rem; width: 100%; max-width: 700px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--title-color); text-align: center;">Frequently Asked Questions</h3>
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What is the turnaround time for a website?</span>
+                                <i class="fas fa-plus faq-icon"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>A standard website (like our Bronze or Silver package) typically takes 1-2 weeks from start to finish. More complex projects, like e-commerce sites or custom systems, can take longer. We'll provide a detailed timeline in our project proposal.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Do you provide hosting and domain registration?</span>
+                                <i class="fas fa-plus faq-icon"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes, all of our web development packages include one year of free domain registration and web hosting to get you started without any hassle.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What are your payment terms?</span>
+                                <i class="fas fa-plus faq-icon"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We require a 60% deposit to commence work on any project. The remaining 40% balance is due upon project completion and before the final website or system goes live.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="index.html" class="button button--secondary"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const project = document.getElementById('contact-project').value;
+            
+            const phoneNumber = "254745282806";
+
+            // Using WhatsApp's formatting (*bold*) for a more professional look.
+            // We build the string with newlines (\n) and then encode it for the URL.
+            const messageBody = `*New Project Inquiry from Website*\n\n` +
+                                `*Name:* ${name}\n` +
+                                `*Email:* ${email}\n\n` +
+                                `*Project Description:*\n${project}`;
+
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageBody)}`;
+            
+            window.open(url, '_blank');
+            e.target.reset();
+        });
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

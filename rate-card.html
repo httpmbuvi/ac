@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANCO CREATIONS - Official Rate Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root {
+            /* Default Light Theme for Screen */
+            --body-color: #ffffff;
+            --text-color: #444;
+            --title-color: #111;
+            --first-color: #007bff;
+            --container-color: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px; /* A4-like width */
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--body-color);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--title-color);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .logo:hover {
+            color: var(--first-color);
+            text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+        .logo span {
+            border: 2px solid var(--first-color);
+            color: var(--first-color);
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: transform 0.4s ease-in-out;
+        }
+        .logo:hover span {
+            transform: rotate(360deg);
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            color: var(--title-color);
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .section__title {
+            font-size: 1.8rem;
+            color: var(--title-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .package-card {
+            background-color: var(--container-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 1.5rem;
+            background-color: #64ffda;
+            color: #fff;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .package-card__title {
+            font-size: 1.25rem;
+            color: var(--title-color);
+            margin: 0 0 0.5rem 0;
+        }
+        .package-card__price {
+            font-size: 1.5rem;
+            color: var(--first-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .package-card__features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+            flex-grow: 1;
+        }
+        .package-card__features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .package-card__features i {
+            color: var(--first-color);
+            margin-right: 0.75rem;
+            margin-top: 4px;
+        }
+        .package-card__description {
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .footer a {
+            color: var(--first-color);
+            text-decoration: none;
+        }
+        .print-actions {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 0.5rem;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--first-color);
+            color: #fff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        /* --- Print Specific Styles --- */
+        @media print {
+            /* General Reset for Print */
+            body {
+                background-color: #fff !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact; /* Ensures background colors and images are printed */
+                print-color-adjust: exact;
+            }
+            .container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0.5in !important; /* Standard print margins */
+                box-shadow: none !important;
+            }
+
+            /* Hide elements not needed in print */
+            .no-print, .print-actions {
+                display: none !important;
+            }
+
+            /* Header adjustments */
+            .header {
+                border-bottom: 2px solid #333 !important;
+                padding-bottom: 1rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .logo {
+                color: #000 !important;
+                font-size: 2.5rem !important;
+            }
+            .logo span {
+                border-color: #000 !important;
+                color: #000 !important;
+                background: none !important;
+                box-shadow: none !important;
+            }
+            .header h1 {
+                color: #000 !important;
+                font-size: 1.8rem !important;
+                margin-top: 0.5rem !important;
+            }
+            .header p {
+                color: #555 !important;
+                font-size: 0.9rem !important;
+            }
+
+            /* Section Titles */
+            .section__title {
+                color: #000 !important;
+                border-bottom: 1px solid #ccc !important;
+                padding-bottom: 0.3rem !important;
+                margin-bottom: 1rem !important;
+                font-size: 1.5rem !important;
+            }
+
+            /* Package Cards */
+            .package-card {
+                background-color: #fff !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                page-break-inside: avoid; /* Prevent cards from splitting across pages */
+                margin-bottom: 1rem !important;
+            }
+            .package-card__title {
+                color: #000 !important;
+            }
+            .package-card__price {
+                color: #007bff !important; /* Keep primary color for prices */
+            }
+            .package-card__features i {
+                color: #007bff !important;
+            }
+            .popular-badge {
+                background-color: #007bff !important; /* Use primary color for badge */
+                color: #fff !important;
+                box-shadow: none !important;
+            }
+
+            /* Footer */
+            .footer {
+                border-top: 1px solid #ccc !important;
+                margin-top: 2rem !important;
+                padding-top: 1rem !important;
+                color: #555 !important;
+                font-size: 0.8rem !important;
+            }
+            .footer a {
+                color: #007bff !important;
+                text-decoration: underline !important;
+            }
+            .footer a::after {
+                content: " (" attr(href) ")"; /* Show URL for links */
+                font-size: 0.7em;
+                color: #888;
+            }
+
+            /* Ensure grid layout is maintained or simplified */
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; /* Adjust for print */
+                gap: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-actions no-print">
+            <button onclick="window.print()" class="btn btn-primary"><i class="fas fa-print"></i> Print / Save as PDF</button>
+            <a href="services.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Services</a>
+        </div>
+
+        <header class="header">
+            <a href="index.html" class="logo"><span>A</span>NCO CREATIONS</a>
+            <h1>Official Rate Card</h1>
+            <p>Effective Date: July 2024</p>
+        </header>
+
+        <main>
+            <!-- Web Development Section -->
+            <section class="section">
+                <h2 class="section__title">Web Development</h2>
+                <div class="grid">
+                    <!-- Bronze Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Bronze Package</h3>
+                        <div class="package-card__price">Ksh 25,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>5 Pages</li>
+                            <li><i class="fas fa-check"></i>1 Week Development</li>
+                            <li><i class="fas fa-check"></i>SEO Tag Integration</li>
+                            <li><i class="fas fa-check"></i>Social Media Feed</li>
+                            <li><i class="fas fa-check"></i>Domain name Registration</li>
+                            <li><i class="fas fa-check"></i>Web Hosting</li>
+                            <li><i class="fas fa-check"></i>2 Months Maintenance</li>
+                        </ul>
+                    </div>
+                    <!-- Silver Package -->
+                    <div class="package-card">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3 class="package-card__title">Silver Package</h3>
+                        <div class="package-card__price">Ksh 38,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>8 Pages</li>
+                            <li><i class="fas fa-check"></i>2 Weeks Development</li>
+                            <li><i class="fas fa-check"></i>TLS & SSL Certificate Purchase</li>
+                            <li><i class="fas fa-check"></i>Secured Https redirection</li>
+                            <li><i class="fas fa-check"></i>Google Analytics</li>
+                            <li><i class="fas fa-check"></i>Unlimited email accounts</li>
+                            <li><i class="fas fa-check"></i>Unmetered disk space</li>
+                            <li><i class="fas fa-check"></i>3 Months Maintenance</li>
+                        </ul>
+                    </div>
+                    <!-- Gold Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Gold Package</h3>
+                        <div class="package-card__price">Ksh 45,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>10 Pages Website</li>
+                            <li><i class="fas fa-check"></i>3 Weeks Development</li>
+                            <li><i class="fas fa-check"></i>Unlimited domain names</li>
+                            <li><i class="fas fa-check"></i>Unmetered disk space</li>
+                            <li><i class="fas fa-check"></i>Unlimited email accounts</li>
+                            <li><i class="fas fa-check"></i>Free SSL Certificates</li>
+                            <li><i class="fas fa-check"></i>Free two sub-domains</li>
+                            <li><i class="fas fa-check"></i>Secure and fast</li>
+                            <li><i class="fas fa-check"></i>6 months Maintenance</li>
+                            <li><i class="fas fa-check"></i>SEO Integration</li>
+                            <li><i class="fas fa-check"></i>Unlimited databases</li>
+                            <li><i class="fas fa-check"></i><b>M-Pesa Paybill API Integration</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mobile App Development Section -->
+            <section class="section">
+                <h2 class="section__title">Mobile App Development</h2>
+                <div class="grid">
+                    <!-- Startup Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Startup Package</h3>
+                        <div class="package-card__price">Ksh 90,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Android App</li>
+                            <li><i class="fas fa-check"></i>Basic UI/UX Design</li>
+                            <li><i class="fas fa-check"></i>Up to 5 Screens</li>
+                            <li><i class="fas fa-check"></i>Play Store Submission</li>
+                            <li><i class="fas fa-check"></i>1 Month Support</li>
+                        </ul>
+                    </div>
+                    <!-- Business Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Business Package</h3>
+                        <div class="package-card__price">Ksh 150,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Android & iOS (Hybrid)</li>
+                            <li><i class="fas fa-check"></i>Custom UI/UX</li>
+                            <li><i class="fas fa-check"></i>Up to 10 Screens</li>
+                            <li><i class="fas fa-check"></i><b>M-Pesa STK Push Integration</b></li>
+                            <li><i class="fas fa-check"></i>2 Months Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profiles Section -->
+            <section class="section">
+                <h2 class="section__title">Digital Profiles</h2>
+                <div class="grid">
+                    <!-- Company Profile -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Company Profile</h3>
+                        <div class="package-card__price">Ksh 80,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Professional Design</li>
+                            <li><i class="fas fa-check"></i>CMS Integration</li>
+                            <li><i class="fas fa-check"></i>10 Pages</li>
+                            <li><i class="fas fa-check"></i>SEO Optimization</li>
+                        </ul>
+                    </div>
+                    <!-- School Profile -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">School Profile</h3>
+                        <div class="package-card__price">Custom Quote</div>
+                        <p class="package-card__description">Comprehensive management systems tailored for educational institutions, including student portals, result management, and more.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Network & Systems Section -->
+            <section class="section" id="systems-section">
+                <h2 class="section__title">System Development & Integration</h2>
+                <div class="grid">
+                    <!-- Network Configuration -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Network Configuration</h3>
+                        <div class="package-card__price">Ksh 50,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Local Area Network (LAN) Setup</li>
+                            <li><i class="fas fa-check"></i>Router & Switch Configuration</li>
+                            <li><i class="fas fa-check"></i>Up to 20 Network Nodes</li>
+                            <li><i class="fas fa-check"></i>Basic Network Security Audit</li>
+                        </ul>
+                    </div>
+                    <!-- System Integration -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">System Integration</h3>
+                        <div class="package-card__price">Custom Quote</div>
+                        <p class="package-card__description">Seamless integration of disparate systems (like CRM, ERP, and custom software) to ensure smooth data flow and improve operational efficiency.</p>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i><b>Custom M-Pesa Paybill API Development</b></li>
+                            <li><i class="fas fa-check"></i>Automated Payment Callbacks</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Terms & Payment Section -->
+            <section class="section" style="page-break-inside: avoid;">
+                <h2 class="section__title">Terms & Payment</h2>
+                <div class="grid">
+                    <div class="package-card">
+                        <h3 class="package-card__title">Terms of Service</h3>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-info-circle"></i>60% Deposit required to commence work.</li>
+                            <li><i class="fas fa-info-circle"></i>Balance due upon project completion.</li>
+                            <li><i class="fas fa-info-circle"></i>Content to be provided by client.</li>
+                            <li><i class="fas fa-info-circle"></i>Quote valid for 30 days.</li>
+                        </ul>
+                    </div>
+                    <div class="package-card">
+                        <h3 class="package-card__title">Payment Details</h3>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-mobile-alt"></i><strong>M-Pesa Paybill:</strong> 400200, Account: ANCOWEB</li>
+                            <li><i class="fas fa-mobile-alt"></i><strong>M-Pesa:</strong> 0745 282 806 (Thomas Antony)</li>
+                            <li><i class="fas fa-university"></i><strong>Bank Transfer:</strong> Details on invoice.</li>
+                            <li><i class="fas fa-envelope"></i><strong>Email:</strong> thomasantony372@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Prices are subject to change. For a custom quote or more information, please contact us.</p>
+            <div style="margin: 1.5rem 0;" class="no-print">
+                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+            </div>
+            <p>
+                <strong>Email:</strong> <a href="mailto:thomasantony372@gmail.com">thomasantony372@gmail.com</a> | 
+                <strong>Phone:</strong> <a href="tel:+254745282806">0745 282 806</a>
+            </p>
+            <p>&copy; 2026 Anco Creations. All rights reserved. | Generated on <span id="generated-date"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('print') === 'true') {
+                setTimeout(() => window.print(), 500);
+            }
+
+            // Set generated date in footer
+            const dateElement = document.getElementById('generated-date');
+            if (dateElement) {
+                const now = new Date();
+                dateElement.textContent = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+        }
+    </script>
+</body>
+</html>
+            --body-color: #ffffff;
+            --text-color: #444;
+            --title-color: #111;
+            --first-color: #007bff; /* A more standard blue for print */
+            --container-color: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px; /* A4-like width */
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--body-color);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--title-color);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .logo:hover {
+            color: var(--first-color);
+            text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+        .logo span {
+            border: 2px solid var(--first-color);
+            color: var(--first-color);
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: transform 0.4s ease-in-out;
+        }
+        .logo:hover span {
+            transform: rotate(360deg);
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            color: var(--title-color);
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .section__title {
+            font-size: 1.8rem;
+            color: var(--title-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .package-card {
+            background-color: var(--container-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 1.5rem;
+            background-color: #64ffda;
+            color: #fff;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .package-card__title {
+            font-size: 1.25rem;
+            color: var(--title-color);
+            margin: 0 0 0.5rem 0;
+        }
+        .package-card__price {
+            font-size: 1.5rem;
+            color: var(--first-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .package-card__features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+            flex-grow: 1;
+        }
+        .package-card__features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .package-card__features i {
+            color: var(--first-color);
+            margin-right: 0.75rem;
+            margin-top: 4px;
+        }
+        .package-card__description {
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .footer a {
+            color: var(--first-color);
+            text-decoration: none;
+        }
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+            }
+            .container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            :root {
+                --first-color: #007bff;
+            }
+            .package-card {
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        .print-actions {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 0.5rem;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--first-color);
+            color: #fff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-actions no-print">
+            <button onclick="window.print()" class="btn btn-primary"><i class="fas fa-print"></i> Print / Save as PDF</button>
+            <a href="services.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Services</a>
+        </div>
+
+        <header class="header">
+            <a href="index.html" class="logo"><span>A</span>NCO CREATIONS</a>
+            <h1>Official Rate Card</h1>
+            <p>Effective Date: July 2024</p>
+        </header>
+
+        <main>
+            <!-- Web Development Section -->
+            <section class="section">
+                <h2 class="section__title">Web Development</h2>
+                <div class="grid">
+                    <!-- Bronze Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Bronze Package</h3>
+                        <div class="package-card__price">Ksh 25,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>5 Pages</li>
+                            <li><i class="fas fa-check"></i>1 Week Development</li>
+                            <li><i class="fas fa-check"></i>SEO Tag Integration</li>
+                            <li><i class="fas fa-check"></i>Social Media Feed</li>
+                            <li><i class="fas fa-check"></i>Domain name Registration</li>
+                            <li><i class="fas fa-check"></i>Web Hosting</li>
+                            <li><i class="fas fa-check"></i>2 Months Maintenance</li>
+                        </ul>
+                    </div>
+                    <!-- Silver Package -->
+                    <div class="package-card">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3 class="package-card__title">Silver Package</h3>
+                        <div class="package-card__price">Ksh 38,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>8 Pages</li>
+                            <li><i class="fas fa-check"></i>2 Weeks Development</li>
+                            <li><i class="fas fa-check"></i>TLS & SSL Certificate Purchase</li>
+                            <li><i class="fas fa-check"></i>Secured Https redirection</li>
+                            <li><i class="fas fa-check"></i>Google Analytics</li>
+                            <li><i class="fas fa-check"></i>Unlimited email accounts</li>
+                            <li><i class="fas fa-check"></i>Unmetered disk space</li>
+                            <li><i class="fas fa-check"></i>3 Months Maintenance</li>
+                        </ul>
+                    </div>
+                    <!-- Gold Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Gold Package</h3>
+                        <div class="package-card__price">Ksh 45,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>10 Pages Website</li>
+                            <li><i class="fas fa-check"></i>3 Weeks Development</li>
+                            <li><i class="fas fa-check"></i>Unlimited domain names</li>
+                            <li><i class="fas fa-check"></i>Unmetered disk space</li>
+                            <li><i class="fas fa-check"></i>Unlimited email accounts</li>
+                            <li><i class="fas fa-check"></i>Free SSL Certificates</li>
+                            <li><i class="fas fa-check"></i>Free two sub-domains</li>
+                            <li><i class="fas fa-check"></i>Secure and fast</li>
+                            <li><i class="fas fa-check"></i>6 months Maintenance</li>
+                            <li><i class="fas fa-check"></i>SEO Integration</li>
+                            <li><i class="fas fa-check"></i>Unlimited databases</li>
+                            <li><i class="fas fa-check"></i><b>M-Pesa Paybill API Integration</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mobile App Development Section -->
+            <section class="section">
+                <h2 class="section__title">Mobile App Development</h2>
+                <div class="grid">
+                    <!-- Startup Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Startup Package</h3>
+                        <div class="package-card__price">Ksh 90,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Android App</li>
+                            <li><i class="fas fa-check"></i>Basic UI/UX Design</li>
+                            <li><i class="fas fa-check"></i>Up to 5 Screens</li>
+                            <li><i class="fas fa-check"></i>Play Store Submission</li>
+                            <li><i class="fas fa-check"></i>1 Month Support</li>
+                        </ul>
+                    </div>
+                    <!-- Business Package -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Business Package</h3>
+                        <div class="package-card__price">Ksh 150,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Android & iOS (Hybrid)</li>
+                            <li><i class="fas fa-check"></i>Custom UI/UX</li>
+                            <li><i class="fas fa-check"></i>Up to 10 Screens</li>
+                            <li><i class="fas fa-check"></i><b>M-Pesa STK Push Integration</b></li>
+                            <li><i class="fas fa-check"></i>2 Months Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profiles Section -->
+            <section class="section">
+                <h2 class="section__title">Digital Profiles</h2>
+                <div class="grid">
+                    <!-- Company Profile -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Company Profile</h3>
+                        <div class="package-card__price">Ksh 80,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Professional Design</li>
+                            <li><i class="fas fa-check"></i>CMS Integration</li>
+                            <li><i class="fas fa-check"></i>10 Pages</li>
+                            <li><i class="fas fa-check"></i>SEO Optimization</li>
+                        </ul>
+                    </div>
+                    <!-- School Profile -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">School Profile</h3>
+                        <div class="package-card__price">Custom Quote</div>
+                        <p class="package-card__description">Comprehensive management systems tailored for educational institutions, including student portals, result management, and more.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Network & Systems Section -->
+            <section class="section" id="systems-section">
+                <h2 class="section__title">System Development & Integration</h2>
+                <div class="grid">
+                    <!-- Network Configuration -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">Network Configuration</h3>
+                        <div class="package-card__price">Ksh 50,000</div>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i>Local Area Network (LAN) Setup</li>
+                            <li><i class="fas fa-check"></i>Router & Switch Configuration</li>
+                            <li><i class="fas fa-check"></i>Up to 20 Network Nodes</li>
+                            <li><i class="fas fa-check"></i>Basic Network Security Audit</li>
+                        </ul>
+                    </div>
+                    <!-- System Integration -->
+                    <div class="package-card">
+                        <h3 class="package-card__title">System Integration</h3>
+                        <div class="package-card__price">Custom Quote</div>
+                        <p class="package-card__description">Seamless integration of disparate systems (like CRM, ERP, and custom software) to ensure smooth data flow and improve operational efficiency.</p>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-check"></i><b>Custom M-Pesa Paybill API Development</b></li>
+                            <li><i class="fas fa-check"></i>Automated Payment Callbacks</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Terms & Payment Section -->
+            <section class="section" style="page-break-inside: avoid;">
+                <h2 class="section__title">Terms & Payment</h2>
+                <div class="grid">
+                    <div class="package-card">
+                        <h3 class="package-card__title">Terms of Service</h3>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-info-circle"></i>60% Deposit required to commence work.</li>
+                            <li><i class="fas fa-info-circle"></i>Balance due upon project completion.</li>
+                            <li><i class="fas fa-info-circle"></i>Content to be provided by client.</li>
+                            <li><i class="fas fa-info-circle"></i>Quote valid for 30 days.</li>
+                        </ul>
+                    </div>
+                    <div class="package-card">
+                        <h3 class="package-card__title">Payment Details</h3>
+                        <ul class="package-card__features">
+                            <li><i class="fas fa-mobile-alt"></i><strong>M-Pesa Paybill:</strong> 400200, Account: ANCOWEB</li>
+                            <li><i class="fas fa-mobile-alt"></i><strong>M-Pesa:</strong> 0745 282 806 (Thomas Antony)</li>
+                            <li><i class="fas fa-university"></i><strong>Bank Transfer:</strong> Details on invoice.</li>
+                            <li><i class="fas fa-envelope"></i><strong>Email:</strong> thomasantony372@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Prices are subject to change. For a custom quote or more information, please contact us.</p>
+            <div style="margin: 1.5rem 0;" class="no-print">
+                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+            </div>
+            <p>
+                <strong>Email:</strong> <a href="mailto:thomasantony372@gmail.com">thomasantony372@gmail.com</a> | 
+                <strong>Phone:</strong> <a href="tel:+254745282806">0745 282 806</a>
+            </p>
+            <p>&copy; 2026 Anco Creations. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('print') === 'true') {
+                setTimeout(() => window.print(), 500);
+            }
+        }
+    </script>
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANCO CREATIONS | Web Design, Development & IT Solutions</title>
+    <link rel="icon" href="https://i.imgur.com/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        /* AI Assistant Button Glow */
+        .fab-item--ai {
+            animation: ai-glow 1.5s infinite alternate;
+            border-radius: 5px;
+        }
+        @keyframes ai-glow {
+            from { box-shadow: 0 0 2px var(--primary-color); }
+            to { box-shadow: 0 0 15px var(--primary-color); }
+        }
+
+        /* Chat Modal */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: var(--container-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        body.dark-theme .chat-modal {
+            background-color: #2a3b55;
+            border-color: #64ffda;
+        }
+        .chat-header {
+            background-color: rgba(23, 42, 69, 0.95);
+            padding: 10px;
+            border-bottom: 1px solid #3a4b66;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 80%;
+            font-size: 0.9rem;
+        }
+        .bot-message {
+            background-color: #3a4b66;
+            color: var(--title-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+        .user-message {
+            background-color: var(--primary-color);
+            color: var(--body-color);
+            align-self: flex-end; 
+            border-bottom-right-radius: 0;
+        }
+        .typing-indicator {
+            opacity: 0.7;
+            font-style: italic;
+        }
+        .chat-input-area {
+            padding: 10px;
+            border-top: 1px solid #3a4b66;
+            display: flex;
+            gap: 5px;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #3a4b66;
+            background-color: var(--body-color);
+            color: var(--text-color);
+            outline: none;
+        }
+        body.dark-theme .chat-input {
+            background-color: #172a45;
+        }
+        .chat-send {
+            background: var(--primary-color);
+            border: none;
+            color: var(--body-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Chat Suggestion Buttons */
+        .chat-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .chat-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .chat-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--body-color);
+        }
+        /* Bot Avatar */
+        .bot-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+        /* Mobile Responsive Chat Modal */
+        @media screen and (max-width: 576px) {
+            .chat-modal {
+                width: 90%;
+                right: 5%;
+                bottom: 90px;
+            }
+        }
+        /* Dynamic Slider Styles */
+        .home__slide.js-active {
+            opacity: 1 !important;
+            z-index: 1;
+            transform: scale(1) !important;
+            transition: opacity 1s ease-in-out;
+        }
+        .home__slide.js-inactive {
+            opacity: 0 !important;
+            z-index: 0;
+            transition: opacity 1s ease-in-out;
+            animation: none !important; /* Disable CSS animation */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO CREATIONS</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link active-link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="services.html" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="services.html#rate-card" class="nav__link">Our Rate Card</a></li>
+                    <li class="nav__item"><a href="skills.html" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle"><i class="fas fa-bars"></i><i class="fas fa-times"></i></div>
+            <i class="fas fa-moon theme-toggle"></i>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="home" class="home">
+            <div class="home__slider" id="home-slider">
+                <!-- Default Slides will be here if JS fails, or replaced by JS -->
+                <div class="home__slide" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="home__slide" style="background-image: url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="home__slide" style="background-image: url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="home__slide" style="background-image: url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="home__slide" style="background-image: url('https://images.unsplash.com/photo-1633613286991-611fe299c4be?auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="home__slide" style="background-image: url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1170&q=80');"></div>
+            </div>
+
+            <div class="home__container container grid">
+                <div class="home__content">
+                    <h1>Crafting Digital Excellence</h1>
+                    <h3>From Concept to Creation</h3>
+                    <p>We build beautiful, functional, and accessible digital experiences. Specializing in modern web technologies to bring your vision to life.</p>
+                    <div class="home__buttons">
+                        <a href="contact.html" class="button button--secondary">Get in Touch</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home__social">
+                <a href="https://wa.me/254745282806" target="_blank" class="home__social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" target="_blank" class="home__social-link"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank" class="home__social-link"><i class="fab fa-github"></i></a>
+            </div>
+        </section>
+
+        <!-- SERVICES & RATE CARD SECTION -->
+        <section id="services" class="services section">
+            <h2 class="section__title">Our Services & Rate Card</h2>
+            <div class="services__container container grid">
+                <!-- Web Development Card -->
+                <article class="service__card">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=80" alt="Web Development" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Web Development</h3>
+                        <p class="service__description">
+                            🥉 <b>Bronze (Ksh 25k):</b> 5 Pages, 1 Week.<br>
+                            🥈 <b>Silver (Ksh 38k):</b> 8 Pages, SSL, Analytics.<br>
+                            🥇 <b>Gold (Ksh 45k):</b> 10+ Pages, Full SEO.
+                        </p>
+                        <p class="service__price">Starting from Ksh 25,000</p>
+                        <a href="services.html#web-dev" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</a>
+                    </div>
+                </article>
+
+                <!-- Mobile App Development Card -->
+                <article class="service__card">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=500&q=80" alt="Mobile Apps" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Mobile App Development</h3>
+                        <p class="service__description">
+                            🚀 <b>Startup (Ksh 90k):</b> Android, 5 Screens.<br>
+                            💼 <b>Business (Ksh 150k):</b> Hybrid (iOS/Android).
+                        </p>
+                        <p class="service__price">Starting from Ksh 90,000</p>
+                        <a href="services.html#mobile-app" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</a>
+                    </div>
+                </article>
+
+                <!-- Systems & Branding Card -->
+                <article class="service__card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80" alt="Systems & Profiles" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Systems & Branding</h3>
+                        <p class="service__description">
+                            📄 <b>Company Profiles:</b> 10 Pages (Ksh 80k).<br>
+                            ⚙️ <b>Custom Systems:</b> POS, Inventory, Payroll.
+                        </p>
+                        <p class="service__price">Contact for Quote</p>
+                        <a href="services.html#network" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container container">
+            <p>&copy; 2026 Anco Creations. All rights reserved.</p>
+            <ul class="footer__links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+    
+    <div class="fab-container">
+        <div class="fab-menu">
+            <a href="#" class="fab-item fab-item--ai" aria-label="Ask Tonny" onclick="toggleChatModal(event)"><i class="fas fa-robot"></i><span>Ask Tonny</span></a>
+            <a href="contact.html" class="fab-item" aria-label="Email Us"><i class="fas fa-envelope"></i><span>Email Us</span></a>
+            <a href="https://wa.me/254745282806?text=Hello%20Anco%20Creations!%20I'm%20interested%20in%20your%20services." target="_blank" class="fab-item fab-item--whatsapp" aria-label="Chat with us"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+        </div>
+        <button class="fab-toggle" aria-label="Toggle chat menu"><i class="fas fa-comment-dots"></i><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Chat Modal -->
+    <div id="chat-modal" class="chat-modal">
+        <div class="chat-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-robot" style="font-size: 1.5rem;"></i>
+                <span>Tonny</span>
+            </div>
+            <div>
+                <i class="fas fa-sync-alt" title="Clear Chat" style="cursor: pointer; margin-right: 10px;" onclick="clearChat()"></i>
+                <i class="fas fa-times" title="Close Chat" style="cursor: pointer;" onclick="toggleChatModal(event)"></i>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type a message..." onkeypress="handleChatKey(event)">
+            <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <a href="#" class="scrollup" id="scroll-up"><i class="fas fa-arrow-up"></i></a>
+    <script src="script.js"></script>
+    <script>
+        // Create an Audio object for the chat sound. Using a base64 string means no extra files to load.
+        const chatSound = new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//tAwAAAAAAAAAAAAAAAAAAAAAAAABodHRwOi8vd3d3Lm11c2V0ZWMuY29tLwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-AAAA//80DEIAAAAKgAABQAAAARTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-AAAA//80DEPAAAAsQAAAAIAVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZ-AAAAA//80DEQAAAAAAAANJUAAAAAAAAAAAFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhY-');
+        chatSound.volume = 0.5; // Set volume to a reasonable level
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load chat history on page load
+            loadChatHistory();
+        });
+
+        // Chat Modal Logic
+        function toggleChatModal(e) {
+            if(e) e.preventDefault();
+            const modal = document.getElementById('chat-modal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+                document.getElementById('chat-input').focus();
+            }
+        }
+
+        function clearChat() {
+            const messagesDiv = document.getElementById('chat-messages');
+            messagesDiv.innerHTML = '';
+            localStorage.removeItem('chatHistory');
+            addMessage("Hello! I'm Tonny, your AI assistant. How can I help you today?", 'bot-message');
+        }
+
+        function handleChatKey(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user-message');
+            input.value = '';
+
+            const typingIndicator = addMessage('Typing...', 'bot-message typing-indicator');
+
+            setTimeout(() => {
+                typingIndicator.remove();
+                const responseData = getBotResponse(message);
+                addMessage(responseData.text, 'bot-message');
+                if (responseData.options) {
+                    addOptions(responseData.options);
+                }
+            }, 1000);
+        }
+
+        function addMessage(text, className, save = true) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${className}`;
+            msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+            messagesDiv.appendChild(msgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // Play sound for bot messages (but not for the typing indicator)
+            if (className.includes('bot-message') && !className.includes('typing-indicator')) {
+                // Use a try-catch block in case autoplay is blocked by the browser
+                try {
+                    chatSound.play();
+                } catch (error) {
+                    console.log("Chat sound autoplay was blocked by the browser.");
+                }
+            }
+
+            if (save && !className.includes('typing-indicator')) {
+                saveMessageToStorage(text, className);
+            }
+            return msgDiv;
+        }
+
+        function addOptions(options) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'chat-options';
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'chat-btn';
+                button.innerText = option;
+                button.onclick = () => {
+                    // Set input and send message
+                    const input = document.getElementById('chat-input');
+                    input.value = option;
+                    sendMessage();
+                };
+                optionsDiv.appendChild(button);
+            });
+            messagesDiv.appendChild(optionsDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function saveMessageToStorage(text, className) {
+            let history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+            history.push({ text, className });
+            localStorage.setItem('chatHistory', JSON.stringify(history));
+        }
+
+        function loadChatHistory() {
+            const history = JSON.parse(localStorage.getItem('chatHistory'));
+            if (history && history.length > 0) {
+                history.forEach(msg => addMessage(msg.text, msg.className, false));
+            } else {
+                addMessage("Hello! I'm Tonny, your AI assistant. How can I help you today?", 'bot-message');
+            }
+        }
+
+        function getBotResponse(input) {
+            input = input.toLowerCase();
+            
+            let response = { text: "", options: [] };
+
+            // Greetings
+            if (input.match(/\b(hi|hello|hey|start|morning|evening|afternoon)\b/)) {
+                 response.text = "Hello! I'm Tonny. I can provide details about:<br>1. <b>Services</b> we offer<br>2. <b>Rate Card</b> (Pricing)<br>3. <b>Contact</b> Details<br>4. <b>About</b> Us<br>What would you like to know?";
+                 response.options = ["Our Services", "View Pricing", "Contact Info", "About Us"];
+                 return response;
+            }
+
+            // Contact Details
+            if (input.includes('contact') || input.includes('email') || input.includes('phone') || input.includes('call') || input.includes('reach') || input.includes('location') || input.includes('address') || input.includes('where')) {
+                response.text = "<b>Contact Us:</b><br>📞 <b>Phone:</b> 0745 282 806<br>📧 <b>Email:</b> thomasantony372@gmail.com<br>📧 <b>Official:</b> anco.creations@outlook.com<br>📍 <b>Location:</b> Nairobi, Kenya<br>🕒 <b>Hours:</b> Mon-Fri 9AM-5PM, Sat 10AM-2PM.";
+                response.options = ["Main Menu", "WhatsApp Us"];
+                return response;
+            }
+
+            // About Us
+            if (input.includes('about') || input.includes('who are you') || input.includes('company') || input.includes('ceo')) {
+                response.text = "<b>About ANCO Creations:</b><br>We are a tech company specializing in digital solutions.<br><b>Experience:</b> 5+ Years<br><b>Expertise:</b> Web & System Development, App Dev, Graphic Design.<br><b>CEO & Director:</b> Anthony.";
+                response.options = ["View Services", "Contact Us"];
+                return response;
+            }
+
+            // Services
+            if (input.includes('service') && !input.includes('price')) {
+                 response.text = "<b>Our Services:</b><br>• Web Design & Development<br>• Mobile App Development<br>• System Development (POS, Inventory)<br>• Payroll Systems<br>• Graphic Design<br>• Company Profiles<br>• Admin Dashboards<br>• IT Support";
+                 response.options = ["Web Pricing", "App Pricing", "System Pricing"];
+                 return response;
+            }
+
+            // Rate Card / Pricing - Web
+            if ((input.includes('web') || input.includes('site')) && (input.includes('price') || input.includes('cost') || input.includes('rate') || input.includes('package') || input.includes('much'))) {
+                response.text = "<b>Web Development Rates:</b><br>🥉 <b>Bronze (Ksh 25k):</b> 5 Pages, 1 Week.<br>🥈 <b>Silver (Ksh 38k):</b> 8 Pages, SSL, Analytics.<br>🥇 <b>Gold (Ksh 45k):</b> 10+ Pages, Full SEO, Unmetered Storage.";
+                response.options = ["App Rates", "Main Menu"];
+                return response;
+            }
+
+            // Rate Card / Pricing - App
+            if ((input.includes('app') || input.includes('mobile')) && (input.includes('price') || input.includes('cost') || input.includes('rate') || input.includes('package') || input.includes('much'))) {
+                response.text = "<b>Mobile App Rates:</b><br>🚀 <b>Startup (Ksh 90k):</b> Android, 5 Screens.<br>💼 <b>Business (Ksh 150k):</b> Hybrid (Android/iOS), 10 Screens, API Integration.";
+                response.options = ["Web Rates", "Main Menu"];
+                return response;
+            }
+
+            // Rate Card / Pricing - Profiles
+            if (input.includes('profile') && (input.includes('price') || input.includes('cost') || input.includes('rate'))) {
+                response.text = "<b>Company Profile:</b> Ksh 80,000 (10 Pages, Professional Design).<br><b>School Profile:</b> Custom Quote.";
+                response.options = ["Main Menu", "Contact Us"];
+                return response;
+            }
+
+            // Rate Card / Pricing - General
+            if (input.includes('price') || input.includes('rate') || input.includes('cost') || input.includes('package') || input.includes('much')) {
+                response.text = "<b>Rate Card Overview:</b><br>• <b>Websites:</b> Ksh 25k - 45k<br>• <b>Apps:</b> Ksh 90k - 150k<br>• <b>Profiles:</b> Ksh 80k<br>• <b>Network Config:</b> Ksh 50k<br>Ask about a specific service for details!";
+                response.options = ["Web Pricing", "App Pricing"];
+                return response;
+            }
+
+            response.text = "I'm not sure I understand. I can tell you about our <b>Services</b>, <b>Contact</b> info, <b>Rate Card</b>, or <b>About</b> us.";
+            response.options = ["Our Services", "View Pricing", "Contact Info"];
+            return response;
+        }
+
+        // --- DYNAMIC CONTENT LOADER ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Load Branding (Logo)
+            fetch('api.php?endpoint=content&id=site_branding')
+                .then(res => res.json())
+                .then(data => {
+                    const logoLink = document.querySelector('.nav__logo');
+                    if (data.logoUrl) {
+                        // If logo image exists, use it
+                        logoLink.innerHTML = `<img src="${data.logoUrl}" alt="Logo" class="logo__img" style="height: 40px; border-radius: 5px;"> ${data.companyName || 'ANCO CREATIONS'}`;
+                    } else if (data.companyName) {
+                        // If only text is updated
+                        logoLink.innerHTML = `<span class="logo__initial">${data.companyName.charAt(0)}</span>${data.companyName.substring(1)}`;
+                    }
+                })
+                .catch(err => console.log('Branding not loaded', err));
+
+            // 2. Load Home Slider
+            fetch('api.php?endpoint=content&id=home_slider')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.images && data.images.trim().length > 0) {
+                        const sliderContainer = document.getElementById('home-slider');
+                        // Split by comma or newline, trim whitespace, remove empty strings
+                        const urls = data.images.split(/[,\n]+/).map(u => u.trim()).filter(u => u);
+                        
+                        if (urls.length > 0) {
+                            // Replace HTML
+                            sliderContainer.innerHTML = urls.map((url, index) => 
+                                `<div class="home__slide ${index === 0 ? 'js-active' : 'js-inactive'}" style="background-image: url('${url}'); animation: none;"></div>`
+                            ).join('');
+
+                            // Initialize JS Slider
+                            let currentSlide = 0;
+                            const slides = sliderContainer.querySelectorAll('.home__slide');
+                            
+                            if (slides.length > 1) {
+                                setInterval(() => {
+                                    // Fade out current
+                                    slides[currentSlide].classList.remove('js-active');
+                                    slides[currentSlide].classList.add('js-inactive');
+                                    
+                                    // Move to next
+                                    currentSlide = (currentSlide + 1) % slides.length;
+                                    
+                                    // Fade in next
+                                    slides[currentSlide].classList.remove('js-inactive');
+                                    slides[currentSlide].classList.add('js-active');
+                                }, 5000); // 5 seconds per slide
+                            }
+                        }
+                    }
+                })
+                .catch(err => console.log('Slider not loaded', err));
+        });
+    </script>
+</body>
+</html>

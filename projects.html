@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | ANCO CREATIONS</title>
+    <link rel="icon" href="https://i.imgur.com/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            margin: 0.25rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .filter-btn.active {
+            background-color: var(--first-color);
+            color: white;
+            border-color: var(--first-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO CREATIONS</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link active-link">Projects</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="services.html" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="services.html#rate-card" class="nav__link">Our Rate Card</a></li>
+                    <li class="nav__item"><a href="skills.html" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle"><i class="fas fa-bars"></i><i class="fas fa-times"></i></div>
+            <i class="fas fa-moon theme-toggle"></i>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2 class="section__title">Our Projects</h2>
+            <div class="search-container container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="project-search" placeholder="Search by title or keyword (e.g., 'mobile', 'pos')" class="search-input">
+            </div>
+            
+            <!-- Category Filter Buttons -->
+            <div class="container" style="text-align: center; margin-bottom: 2rem;">
+                <button class="button button--secondary filter-btn active" data-filter="all">All</button>
+                <button class="button button--secondary filter-btn" data-filter="web">Web</button>
+                <button class="button button--secondary filter-btn" data-filter="mobile">Mobile</button>
+                <button class="button button--secondary filter-btn" data-filter="system">Systems</button>
+                <button class="button button--secondary filter-btn" data-filter="design">Design</button>
+            </div>
+
+            <div class="projects__container container grid" id="projects-container">
+                <!-- Project 1: Website Development -->
+                <div class="project__card" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=60" alt="Website Development" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Website Development</h3>
+                        <ul class="project__details">
+                            <li>Design and development of modern business websites for companies and startups.</li>
+                            <li>Creation of responsive websites that work on mobile phones, tablets, and computers.</li>
+                            <li>Development of car dealership websites with inventory management and admin dashboards.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 2: Mobile Application Development -->
+                <div class="project__card" data-category="mobile">
+                    <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?auto=format&fit=crop&w=800&q=60" alt="Mobile Application Development" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Mobile Application Development</h3>
+                        <ul class="project__details">
+                            <li>Development of business mobile applications connected with cloud and Google services.</li>
+                            <li>Creation of interior design apps where users can upload photos and videos of designs.</li>
+                            <li>Development of apps for companies to showcase products and services.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 3: Business Systems Development -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=800&q=60" alt="Business Systems Development" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Business Systems Development</h3>
+                        <ul class="project__details">
+                            <li>Development of inventory management systems for shops and businesses.</li>
+                            <li>Creation of tenant inventory systems for property managers.</li>
+                            <li>Development of POS systems with receipt printing and transaction management.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 4: Payroll Systems -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=800&q=60" alt="Payroll Systems" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Payroll Systems</h3>
+                        <ul class="project__details">
+                            <li>Development of payroll software for managing employee salaries, deductions, and payslips.</li>
+                            <li>Automation of employee records and salary calculations for organizations.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 5: Company Profiles & Branding -->
+                <div class="project__card" data-category="design">
+                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=60" alt="Company Profiles & Branding" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Company Profiles & Branding</h3>
+                        <ul class="project__details">
+                            <li>Design of professional company profiles for businesses and institutions.</li>
+                            <li>Creation of digital and print branding materials.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 6: Graphic Design Projects -->
+                <div class="project__card" data-category="design">
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Graphic Design Projects" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Graphic Design Projects</h3>
+                        <ul class="project__details">
+                            <li>Logo design for businesses and startups.</li>
+                            <li>Posters, flyers, and social media graphics.</li>
+                            <li>Business cards, letterheads, and product packaging.</li>
+                            <li>Advertising banners, billboards, and website graphics.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 7: Admin Dashboard Development -->
+                <div class="project__card" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=800&q=60" alt="Admin Dashboard Development" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Admin Dashboard Development</h3>
+                        <ul class="project__details">
+                            <li>Creation of admin panels that allow businesses to manage products, vehicles, images, users, and data on their websites.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 8: Custom Digital Solutions -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60" alt="Custom Digital Solutions" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Custom Digital Solutions</h3>
+                        <ul class="project__details">
+                            <li>Development of custom software solutions tailored to business needs such as school systems, HR systems, and automation tools.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 9: M-Pesa API Gateway Integration -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=60" alt="M-Pesa API Gateway" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">M-Pesa API Gateway Integration</h3>
+                        <ul class="project__details">
+                            <li>Custom implementation of Safaricom Daraja API for automated STK Push and C2B transactions.</li>
+                            <li>Real-time payment callback handling and instant database reconciliation for business systems.</li>
+                            <li>Automated SMS notification alerts upon successful transaction processing.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 10: Multi-Vendor E-Commerce Platform -->
+                <div class="project__card" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=60" alt="Multi-Vendor E-Commerce" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Multi-Vendor E-Commerce Platform</h3>
+                        <ul class="project__details">
+                            <li>Comprehensive online marketplace with vendor dashboards and global search capabilities.</li>
+                            <li>Integrated M-Pesa Paybill payment system with automated order status updates.</li>
+                            <li>Advanced inventory tracking and SEO-optimized product pages for high visibility.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="no-projects-message" style="display: none;">No projects match your search.</p>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: 0;">
+            <h2 class="section__title">Example Portfolio Projects</h2>
+            <div class="projects__container container grid">
+                <!-- Membly College SMS System -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=60" alt="Membly College SMS System" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Membly College SMS System</h3>
+                        <p class="project__description">A comprehensive school management system with SMS integration for communication.</p>
+                    </div>
+                </div>
+
+                <!-- Interior Design Mobile App -->
+                <div class="project__card" data-category="mobile">
+                    <img src="https://images.unsplash.com/photo-1588854337236-6889d631f379?auto=format&fit=crop&w=800&q=60" alt="Interior Design Mobile App" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Interior Design Mobile App</h3>
+                        <p class="project__description">A mobile application allowing users to visualize and share interior design concepts.</p>
+                    </div>
+                </div>
+
+                <!-- Car Dealer Inventory Website -->
+                <div class="project__card" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=800&q=60" alt="Car Dealer Inventory Website" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Car Dealer Inventory Website</h3>
+                        <p class="project__description">A full-featured website for car dealerships with inventory management and an admin dashboard.</p>
+                    </div>
+                </div>
+
+                <!-- POS Receipt System -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=60" alt="POS Receipt System" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">POS Receipt System</h3>
+                        <p class="project__description">A Point-of-Sale system with transaction management and integrated receipt printing.</p>
+                    </div>
+                </div>
+
+                <!-- Payroll Management System -->
+                <div class="project__card" data-category="system">
+                    <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=800&q=60" alt="Payroll Management System" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Payroll Management System</h3>
+                        <p class="project__description">Software to automate employee salary calculations, deductions, and payslip generation.</p>
+                    </div>
+                </div>
+
+                <!-- Company Profile Designs -->
+                <div class="project__card" data-category="design">
+                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=60" alt="Company Profile Designs" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Company Profile Designs</h3>
+                        <p class="project__description">Designing professional and compelling company profiles for businesses and institutions.</p>
+                    </div>
+                </div>
+
+                <!-- Logo and Branding Projects -->
+                <div class="project__card" data-category="design">
+                    <img src="https://images.unsplash.com/photo-1542281286-9e0e162437d2?auto=format&fit=crop&w=800&q=60" alt="Logo and Branding Projects" class="project__img">
+                    <div class="project__data">
+                        <h3 class="project__title">Logo & Branding Projects</h3>
+                        <p class="project__description">Creation of unique logos and comprehensive branding materials for various businesses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container container">
+            <p>&copy; 2026 Anco Creations. All rights reserved.</p>
+            <ul class="footer__links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+    
+    <div class="fab-container">
+        <div class="fab-menu">
+            <a href="contact.html" class="fab-item" aria-label="Email Us"><i class="fas fa-envelope"></i><span>Email Us</span></a>
+            <a href="https://wa.me/254745282806?text=Hello%20Anco%20Creations!%20I'm%20interested%20in%20your%20services." target="_blank" class="fab-item fab-item--whatsapp" aria-label="Chat with us"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+        </div>
+        <button class="fab-toggle" aria-label="Toggle chat menu"><i class="fas fa-comment-dots"></i><i class="fas fa-times"></i></button>
+    </div>
+
+    <a href="#" class="scrollup" id="scroll-up"><i class="fas fa-arrow-up"></i></a>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Fetch Dynamic Projects from DB ---
+            fetch('api.php?action=get_projects')
+                .then(response => response.json())
+                .then(projects => {
+                    const container = document.getElementById('projects-container');
+                    
+                    // Loop through projects from database
+                    projects.forEach(project => {
+                        // Create Card HTML
+                        const card = document.createElement('div');
+                        card.className = 'project__card';
+                        if(project.category) {
+                            card.setAttribute('data-category', project.category.toLowerCase());
+                        }
+                        
+                        // Create Technologies badges
+                        let techHtml = '';
+                        if(project.technologies && project.technologies.length > 0) {
+                            techHtml = `<div style="margin-bottom:1rem;">
+                                ${project.technologies.map(t => `<span class="project__tech">${t}</span>`).join('')}
+                            </div>`;
+                        }
+
+                        card.innerHTML = `
+                            <img src="${project.image}" alt="${project.title}" class="project__img">
+                            <div class="project__data">
+                                <h3 class="project__title">${project.title}</h3>
+                                <p class="project__description">${project.description}</p>
+                                ${techHtml}
+                                ${project.link ? `<a href="${project.link}" target="_blank" class="project__link">View Project <i class="fas fa-arrow-right"></i></a>` : ''}
+                            </div>
+                        `;
+                        
+                        // Add to top of list
+                        container.prepend(card);
+                    });
+                })
+                .catch(err => console.error('Error fetching projects:', err));
+
+            // --- Existing Search Logic ---
+            const searchInput = document.getElementById('project-search');
+            const noResultsMessage = document.querySelector('.no-projects-message');
+
+                searchInput.addEventListener('keyup', () => {
+                    // Select cards dynamically inside the event listener to catch new items
+                    const projectCards = document.querySelectorAll('.project__card');
+                    const searchTerm = searchInput.value.toLowerCase();
+                    let visibleCount = 0;
+
+                    projectCards.forEach(card => {
+                        const title = card.querySelector('.project__title')?.textContent.toLowerCase() || '';
+                        const detailsList = card.querySelector('.project__details');
+                        const descriptionPara = card.querySelector('.project__description');
+                        
+                        let details = '';
+                        if (detailsList) {
+                            details = detailsList.textContent.toLowerCase();
+                        } else if (descriptionPara) {
+                            details = descriptionPara.textContent.toLowerCase();
+                        }
+                        const cardText = title + ' ' + details;
+
+                        if (cardText.includes(searchTerm)) {
+                            card.style.display = 'block';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Show 'no results' message if nothing matches
+                    if (visibleCount === 0) {
+                        noResultsMessage.style.display = 'block';
+                    } else {
+                        noResultsMessage.style.display = 'none';
+                    }
+                });
+
+            // --- Category Filtering Logic ---
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked
+                    btn.classList.add('active');
+                    
+                    const filterValue = btn.getAttribute('data-filter');
+                    const allCards = document.querySelectorAll('.project__card');
+                    
+                    allCards.forEach(card => {
+                        const category = card.getAttribute('data-category') || '';
+                        // Check if card category includes filter value (e.g. 'web' matches 'Web Development')
+                        if(filterValue === 'all' || category.includes(filterValue)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

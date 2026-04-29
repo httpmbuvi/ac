@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | ANCO CREATIONS</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        body { padding-top: 5rem; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        
+        /* Form Styles */
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .form-control { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        
+        /* Drag & Drop Zone */
+        .drop-zone {
+            width: 100%;
+            height: 150px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px dashed #007bff;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f8f9fa;
+            transition: background 0.2s;
+        }
+        .drop-zone--over { background: #e9ecef; border-style: solid; }
+        .drop-zone__prompt { font-size: 1rem; color: #666; }
+        .drop-zone__input { display: none; }
+        .drop-zone__thumb {
+            width: 100px; height: 100px; border-radius: 10px;
+            overflow: hidden; background-color: #cccccc; background-size: cover;
+            position: relative;
+        }
+
+        /* Project List */
+        .project-item { 
+            display: flex; align-items: center; padding: 1rem; 
+            border-bottom: 1px solid #eee; gap: 1rem; 
+        }
+        .project-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
+        .project-details { flex-grow: 1; }
+        .project-actions { display: flex; gap: 10px; }
+
+        .btn { padding: 0.8rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; color: white; background: var(--primary-color, #007bff); }
+        .btn-danger { background: #dc3545; padding: 0.5rem; }
+        
+        /* Alerts */
+        .alert { padding: 10px; border-radius: 5px; margin-bottom: 1rem; display: none; }
+        .alert-success { background: #d4edda; color: #155724; }
+        .alert-error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="admin-header">
+            <h1>Admin Dashboard</h1>
+            <a href="logout.php" class="btn btn-danger">Logout</a>
+        </div>
+
+        <div class="card">
+            <h2>Upload Project</h2>
+            <div id="msg-box" class="alert"></div>
+            
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label>Project Title</label>
+                    <input type="text" name="title" class="form-control" required placeholder="e.g. Modern E-commerce">
+                </div>
+                
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" class="form-control">
+                        <option value="web">Web Development</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="system">System/Software</option>
+                        <option value="design">Graphic Design</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" class="form-control" rows="3" required placeholder="Project details..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Project Image (Drag & Drop)</label>
+                    <div class="drop-zone" id="dropZone">
+                        <span class="drop-zone__prompt">Drop image here or click to upload<br><small>(JPG, PNG, WEBP - Max 5MB)</small></span>
+                        <input type="file" name="image" class="drop-zone__input" accept="image/png, image/jpeg, image/webp">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Upload Project</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Manage Projects</h2>
+            <div id="project-list">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Check if running correctly on Localhost ---
+        if (window.location.protocol === 'file:') {
+            alert("⚠️ CRITICAL ERROR ⚠️\n\nYou are opening this file directly (file://).\nThis prevents the system from connecting to the database.\n\nPlease open XAMPP, start Apache, and visit:\nhttp://localhost/ancoweb/admin.html");
+        }
+
+        // --- Drag and Drop Logic ---
+        const dropZone = document.getElementById('dropZone');
+        const inputElement = dropZone.querySelector('.drop-zone__input');
+        const promptElement = dropZone.querySelector('.drop-zone__prompt');
+
+        dropZone.addEventListener('click', () => inputElement.click());
+
+        inputElement.addEventListener('change', () => {
+            if (inputElement.files.length) {
+                updateThumbnail(dropZone, inputElement.files[0]);
+            }
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drop-zone--over');
+        });
+        ['dragleave', 'dragend'].forEach(type => {
+            dropZone.addEventListener(type, () => dropZone.classList.remove('drop-zone--over'));
+        });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (e.dataTransfer.files.length) {
+                inputElement.files = e.dataTransfer.files;
+                updateThumbnail(dropZone, e.dataTransfer.files[0]);
+            }
+            dropZone.classList.remove('drop-zone--over');
+        });
+
+        function updateThumbnail(dropZoneElement, file) {
+            promptElement.style.display = 'none';
+            let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
+            if (!thumbnailElement) {
+                thumbnailElement = document.createElement('div');
+                thumbnailElement.classList.add('drop-zone__thumb');
+                dropZoneElement.appendChild(thumbnailElement);
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => { thumbnailElement.style.backgroundImage = `url('${reader.result}')`; };
+        }
+
+        // --- Upload Logic ---
+        const form = document.getElementById('uploadForm');
+        const msgBox = document.getElementById('msg-box');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            try {
+                const res = await fetch('api.php?action=upload', { method: 'POST', body: formData });
+                
+                if (!res.ok) {
+                    // If server returns 400 or 500 error, try to parse the message
+                    const text = await res.text();
+                    try {
+                        const errData = JSON.parse(text);
+                        throw new Error(errData.message || `Server Error (${res.status})`);
+                    } catch(e) {
+                        throw new Error(`Server Error (${res.status}): ${text.substring(0, 50)}...`);
+                    }
+                }
+
+                const text = await res.text(); // Get raw text first to debug
+                let data;
+                
+                try {
+                    data = JSON.parse(text);
+                } catch (err) {
+                    throw new Error("Server Response Error: " + text);
+                }
+
+                msgBox.style.display = 'block';
+                if (data.success) {
+                    msgBox.className = 'alert alert-success';
+                    msgBox.textContent = data.message;
+                    form.reset();
+                    document.querySelector('.drop-zone__thumb')?.remove();
+                    promptElement.style.display = 'block';
+                    loadProjects(); // Refresh List
+                } else {
+                    msgBox.className = 'alert alert-error';
+                    msgBox.textContent = data.message;
+                }
+            } catch (err) {
+                console.error(err);
+                if (err.message === 'Failed to fetch') {
+                    alert("🚫 CONNECTION ERROR\n\nThe system could not connect to the server. Please check:\n1. Is XAMPP (Apache) running?\n2. Are you using 'http://localhost' and NOT 'file://'?\n3. Is the file size too large for your server settings?");
+                } else {
+                    alert(err.message || 'System Error. Check console.');
+                }
+            }
+        });
+
+        // --- List & Delete Projects ---
+        async function loadProjects() {
+            const res = await fetch('api.php?action=get_projects');
+            const projects = await res.json();
+            const list = document.getElementById('project-list');
+            
+            list.innerHTML = projects.map(p => `
+                <div class="project-item">
+                    <img src="${p.image}" alt="img">
+                    <div class="project-details"><strong>${p.title}</strong><br><small>${p.category}</small></div>
+                    <button class="btn btn-danger" onclick="deleteProject(${p.id})"><i class="fas fa-trash"></i></button>
+                </div>`).join('');
+        }
+
+        async function deleteProject(id) {
+            if(!confirm('Are you sure you want to delete this project?')) return;
+            await fetch('api.php?action=delete', {method:'POST', body:JSON.stringify({id: id})});
+            loadProjects();
+        }
+        loadProjects();
+    </script>
+</body>
+</html>

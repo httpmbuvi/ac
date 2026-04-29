@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration | ANCO CREATIONS</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .login-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-top: 5px;}
+        .btn { width: 100%; padding: 10px; background: var(--primary-color, #007bff); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;}
+        .error { color: red; margin-top: 10px; display: none; }
+        .success { color: green; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO CREATIONS</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="services.html" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="services.html#rate-card" class="nav__link">Our Rate Card</a></li>
+                    <li class="nav__item"><a href="skills.html" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle"><i class="fas fa-bars"></i><i class="fas fa-times"></i></div>
+            <i class="fas fa-moon theme-toggle"></i>
+        </nav>
+    </header>
+    <div class="login-card">
+        <h2>Admin Sign Up</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" class="form-control" required placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" class="form-control" required placeholder="Create a password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-password" class="form-control" required placeholder="Confirm password">
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <p id="error-msg" class="error"></p>
+            <p id="success-msg" class="success">Registration successful! Redirecting...</p>
+            <p style="margin-top: 1rem;">Already have an account? <a href="login.html">Login</a></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const errorMsg = document.getElementById('error-msg');
+            const successMsg = document.getElementById('success-msg');
+
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            if (password !== confirmPassword) {
+                errorMsg.innerText = "Passwords do not match!";
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            try {
+                const res = await fetch('register_process.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                // Get text first to debug if server returns HTML/PHP source instead of JSON
+                const text = await res.text();
+                
+                try {
+                    const data = JSON.parse(text);
+                    if (res.ok && data.success) {
+                        successMsg.style.display = 'block';
+                        setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+                    } else {
+                        errorMsg.innerText = data.message || 'Registration failed.';
+                        errorMsg.style.display = 'block';
+                    }
+                } catch (e) {
+                    // If parsing failed, check if we got raw PHP code (Node.js server issue)
+                    if (text.trim().startsWith('<?php')) {
+                        throw new Error("PHP is not executing. Please run this on XAMPP/Apache (http://localhost/...), not Node.js.");
+                    }
+                    throw new Error("Server returned unexpected response: " + text.substring(0, 100));
+                }
+            } catch (err) {
+                errorMsg.innerText = err.message || 'Connection error. Ensure server is running.';
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Our Services | ANCO CREATIONS</title>
+    <meta name="description" content="Explore the services offered by Anco Creations, including web design, system development, network configuration, and more.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://i.imgur.com/favicon.png" type="image/x-icon">
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Cyber Security Theme & Fancy Chat Styles -->
+    <style>
+        /* Services Background Pattern */
+        #services {
+            background-image: radial-gradient(rgba(100, 255, 218, 0.07) 2px, transparent 2px) !important;
+            background-size: 30px 30px !important;
+        }
+
+        /* Rate Card Modal */
+        .rate-card-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(23, 42, 69, 0.9); /* Black w/ opacity */
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .rate-card-modal__content {
+            position: relative;
+            background-color: var(--body-color);
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid var(--primary-color);
+            width: 95%;
+            max-width: 1100px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+            animation: modal-fade-in 0.5s;
+        }
+
+        @keyframes modal-fade-in {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .rate-card-modal__close {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .rate-card-modal__close:hover,
+        .rate-card-modal__close:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary-color);
+            color: var(--body-color);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeEffect 0.5s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .service__features {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+            text-align: left;
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            flex-grow: 1;
+        }
+        .service__features li {
+            padding-left: 1.2em;
+            text-indent: -1.2em;
+            margin-bottom: 0.5rem;
+        }
+        .service__features li::before {
+            content: "▹"; /* A nice arrow character */
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="nav__logo"><span class="logo__initial">A</span>NCO CREATIONS</a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="projects.html" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="about.html" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="services.html" class="nav__link active-link">Services</a></li>
+                    <li class="nav__item"><a href="services.html#rate-card" class="nav__link">Our Rate Card</a></li>
+                    <li class="nav__item"><a href="skills.html" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-times"></i>
+            </div>
+            <i class="fas fa-moon theme-toggle"></i>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Services Section -->
+        <section id="services" class="services section">
+            <h2 class="section__title">Our Services</h2>
+            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2rem; color: var(--text-color);">
+                Elevate your operations with our premium services. Our <strong>able and expert team</strong> is dedicated to delivering seamless integration and innovative tech solutions.
+            </p>
+
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <a href="rate-card.html?print=true" target="_blank" class="button button--primary">
+                    <i class="fas fa-file-pdf"></i> Open Rate Card (Print/Save PDF)
+                </a>
+            </div>
+
+            <div class="services__container container grid" id="services-container">
+                <!-- Service 1: Web Design & Development -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=60" alt="Web Design & Development" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Web Design & Development</h3>
+                        <ul class="service__features">
+                            <li>Business and company websites</li>
+                            <li>🥉 <b>Bronze (Ksh 25k):</b> 5 Pages</li>
+                            <li>🥈 <b>Silver (Ksh 38k):</b> 8 Pages, SSL</li>
+                            <li>🥇 <b>Gold (Ksh 45k):</b> 10+ Pages, Full SEO</li>
+                            <li>E-commerce websites</li>
+                            <li>Portfolio websites</li>
+                            <li>Responsive websites (mobile friendly)</li>
+                            <li>Website maintenance and updates</li>
+                        </ul>
+                        <button class="button button--primary open-rate-card-btn" data-tab="web-dev" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</button>
+                    </div>
+                </div>
+                <!-- Service 2: Mobile App Development -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=800&q=60" alt="Mobile App Development" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Mobile App Development</h3>
+                        <ul class="service__features">
+                            <li>Android business applications</li>
+                            <li>🚀 <b>Startup (Ksh 90k):</b> 5 Screens</li>
+                            <li>💼 <b>Business (Ksh 150k):</b> Hybrid</li>
+                            <li>Custom mobile apps for companies</li>
+                            <li>Apps for product and service showcase</li>
+                            <li>Integration with cloud and online services</li>
+                        </ul>
+                        <button class="button button--primary open-rate-card-btn" data-tab="mobile-app" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</button>
+                    </div>
+                </div>
+
+                <!-- Service 3: System Development -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=60" alt="Business Systems & Automation" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">System Development</h3>
+                        <ul class="service__features">
+                            <li>Inventory management systems</li>
+                            <li>School management systems</li>
+                            <li>POS (Point of Sale) systems</li>
+                            <li>Tenant management systems</li>
+                            <li>Custom business software solutions</li>
+                        </ul>
+                        <button class="button button--primary open-rate-card-btn" data-tab="network" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</button>
+                    </div>
+                </div>
+
+                <!-- Service 4: Payroll Systems -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=800&q=60" alt="Payroll Systems" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Payroll Systems</h3>
+                        <ul class="service__features">
+                            <li>Employee payroll management systems</li>
+                            <li>Salary calculation automation</li>
+                            <li>Payslip generation systems</li>
+                            <li>Staff records management</li>
+                        </ul>
+                        <a href="contact.html" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">Contact for Quote</a>
+                    </div>
+                </div>
+
+                <!-- Service 5: Graphic Design -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Graphic Design" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Graphic Design</h3>
+                        <ul class="service__features">
+                            <li>Logo design & Business cards</li>
+                            <li>Posters and flyers</li>
+                            <li>Social media graphics</li>
+                            <li>Company branding materials</li>
+                            <li>Banners and advertisements</li>
+                        </ul>
+                        <a href="contact.html" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">Contact for Quote</a>
+                    </div>
+                </div>
+
+                <!-- Service 6: Company Profile Design -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=60" alt="Company Profile Design" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Company Profile Design</h3>
+                        <ul class="service__features">
+                            <li>Professional company profiles</li>
+                            <li>Business proposal designs</li>
+                            <li>Corporate presentation documents</li>
+                        </ul>
+                        <button class="button button--primary open-rate-card-btn" data-tab="profiles" style="margin-top: 1rem; padding: 0.5rem 1rem;">View Packages</button>
+                    </div>
+                </div>
+
+                <!-- Service 7: Admin Dashboard Development -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=800&q=60" alt="Admin Dashboard Development" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">Admin Dashboard Development</h3>
+                        <ul class="service__features">
+                            <li>Website admin panels</li>
+                            <li>Data management dashboards</li>
+                            <li>Product and inventory management systems</li>
+                        </ul>
+                        <a href="contact.html" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">Contact for Quote</a>
+                    </div>
+                </div>
+
+                <!-- Service 8: IT Support & Digital Solutions -->
+                <div class="service__card">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60" alt="IT Support & Digital Solutions" class="service__img">
+                    <div class="service__data">
+                        <h3 class="service__title">IT Support & Digital Solutions</h3>
+                        <ul class="service__features">
+                            <li>Website management and hosting support</li>
+                            <li>Business digital transformation</li>
+                            <li>Technology consultation for businesses</li>
+                        </ul>
+                        <a href="contact.html" class="button button--primary" style="margin-top: 1rem; padding: 0.5rem 1rem;">Contact for Quote</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="index.html" class="button button--secondary"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rate Card Modal -->
+    <div id="rate-card-modal" class="rate-card-modal">
+        <div class="rate-card-modal__content">
+            <span class="rate-card-modal__close">&times;</span>
+            <h2 class="section__title" id="rate-card">Detailed Rate Card</h2>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <a href="rate-card.html?print=true" target="_blank" class="button button--primary">
+                    <i class="fas fa-file-pdf"></i> Open Rate Card (Print/Save PDF)
+                </a>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'web-dev')">Web Development</button>
+                <button class="tab-btn" onclick="openTab(event, 'mobile-app')">Mobile Apps</button>
+                <button class="tab-btn" onclick="openTab(event, 'systems')">Systems</button>
+                <button class="tab-btn" onclick="openTab(event, 'profiles')">Profiles</button>
+            </div>
+
+            <!-- Web Development Tab -->
+            <div id="web-dev" class="tab-content active">
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <!-- Bronze Package -->
+                    <div class="service__card" style="padding: 1.5rem;">
+                        <h3 class="service__title">🥉 Bronze Package</h3>
+                        <p class="service__price">Ksh 25,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>5 Pages | 1 Week Development</li>
+                            <li>Free Domain & Hosting (1yr)</li>
+                            <li><i class="fas fa-check"></i>Basic SEO Integration</li>
+                        </ul>
+                    </div>
+                    <!-- Silver Package -->
+                    <div class="service__card" style="padding: 1.5rem; border-color: var(--primary-color);">
+                        <h3 class="service__title">🥈 Silver Package</h3>
+                        <p class="service__price">Ksh 38,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>8 Pages | 2 Weeks Development</li>
+                            <li><i class="fas fa-check"></i>SSL Certificate & Google Analytics</li>
+                            <li><i class="fas fa-check"></i>Unlimited Email Accounts</li>
+                        </ul>
+                    </div>
+                    <!-- Gold Package -->
+                    <div class="service__card" style="padding: 1.5rem;">
+                        <h3 class="service__title">🥇 Gold Package</h3>
+                        <p class="service__price">Ksh 45,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>10+ Pages | 3 Weeks Development</li>
+                            <li><i class="fas fa-check"></i>Full SEO Optimization & Unmetered Storage</li>
+                            <li><i class="fas fa-check"></i>E-commerce Ready</li>
+                            <li><i class="fas fa-check"></i><b>M-Pesa Paybill API Integration</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile App Tab -->
+            <div id="mobile-app" class="tab-content">
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <!-- Startup App Package -->
+                    <div class="service__card" style="padding: 1.5rem;">
+                        <h3 class="service__title">🚀 Startup App</h3>
+                        <p class="service__price">Ksh 90,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>Android App | Up to 5 Screens</li>
+                            <li><i class="fas fa-check"></i>Basic UI/UX & Firebase Integration</li>
+                            <li><i class="fas fa-check"></i>Play Store Submission</li>
+                        </ul>
+                    </div>
+                    <!-- Business App Package -->
+                    <div class="service__card" style="padding: 1.5rem;">
+                        <h3 class="service__title">💼 Business App</h3>
+                        <p class="service__price">Ksh 150,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>Hybrid (iOS & Android) | Up to 10 Screens</li>
+                            <li><i class="fas fa-check"></i>Custom UI/UX & API Integration</li>
+                            <li><i class="fas fa-check"></i><b>M-Pesa STK Push & Paybill Integration</b></li>
+                            <li><i class="fas fa-check"></i>2 Months Technical Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Systems Tab -->
+            <div id="systems" class="tab-content">
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="service__card" style="padding: 1.5rem;">
+                        <h3 class="service__title">Custom Business Systems</h3>
+                        <p class="service__price">Starting from Ksh 50,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>Tailored solutions for POS, Inventory, CRM, etc.</li>
+                            <li><i class="fas fa-check"></i>Scalable and secure architecture</li>
+                            <li><i class="fas fa-check"></i><b>Automated M-Pesa Payment Reconciliation</b></li>
+                            <li><i class="fas fa-check"></i>Real-time Data Backups</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profiles Tab -->
+            <div id="profiles" class="tab-content">
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="service__card" style="padding: 1.5rem;">
+                        <h3 class="service__title">Company Profiles</h3>
+                        <p class="service__price">Ksh 80,000</p>
+                        <ul class="service__features">
+                            <li><i class="fas fa-check"></i>Professional Design & Content Integration</li>
+                            <li><i class="fas fa-check"></i>Up to 10 Pages</li>
+                            <li><i class="fas fa-check"></i>SEO Optimized</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container container">
+            <p>&copy; 2026 Anco Creations. All rights reserved.</p>
+            <ul class="footer__links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <div class="fab-menu">
+            <a href="contact.html" class="fab-item" aria-label="Email Us"><i class="fas fa-envelope"></i><span>Email Us</span></a>
+            <a href="https://wa.me/254745282806?text=Hello%20Anco%20Creations!%20I'm%20interested%20in%20your%20services." target="_blank" class="fab-item fab-item--whatsapp" aria-label="Chat with us">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+        </div>
+        <button class="fab-toggle" aria-label="Toggle chat menu">
+            <i class="fas fa-comment-dots"></i>
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Scroll Up Button -->
+    <a href="#" class="scrollup" id="scroll-up"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Tab Logic
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            if(evt) evt.currentTarget.className += " active";
+        }
+
+        // Rate Card Modal Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('rate-card-modal');
+            const openBtns = document.querySelectorAll('.open-rate-card-btn');
+            const navLinks = document.querySelectorAll('a[href="services.html#rate-card"]');
+            const closeBtn = document.querySelector('.rate-card-modal__close');
+            
+            function openModal(e) {
+                if(e && e.preventDefault) e.preventDefault();
+                if(modal) modal.style.display = 'flex';
+                
+                // Handle tab opening if triggered by button with data-tab
+                if (e && e.currentTarget) {
+                    const tabName = e.currentTarget.getAttribute('data-tab');
+                    if(tabName) triggerTab(tabName);
+                }
+            }
+
+            function triggerTab(tabName) {
+                const tabBtn = document.querySelector(`.tab-btn[onclick*="${tabName}"]`);
+                if(tabBtn) tabBtn.click();
+            }
+
+            function closeModal() {
+                if(modal) modal.style.display = 'none';
+            }
+
+            openBtns.forEach(btn => btn.addEventListener('click', openModal));
+            if(closeBtn) closeBtn.addEventListener('click', closeModal);
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', openModal);
+            });
+
+            // Close if user clicks outside of the modal content
+            window.addEventListener('click', function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            });
+
+            // Function to check hash and open correct tab
+            function checkHash() {
+                const currentHash = window.location.hash.substring(1);
+                const validTabs = ['web-dev', 'mobile-app', 'systems', 'profiles'];
+                
+                if (currentHash === 'rate-card') {
+                    openModal();
+                } else if (validTabs.includes(currentHash)) {
+                    openModal();
+                    triggerTab(currentHash);
+                }
+            }
+
+            // Initial check on load
+            checkHash();
+
+            // Listen for hash changes (e.g. clicking menu while already on page)
+            window.addEventListener('hashchange', checkHash);
+            
+            // Ensure nav links trigger modal even if hash doesn't change
+            const navLinksInternal = document.querySelectorAll('a[href="services.html#rate-card"]');
+            const validTabs = ['web-dev', 'mobile-app', 'network', 'profiles'];
+            navLinksInternal.forEach(link => link.addEventListener('click', openModal));
+        });
+    </script>
+</body>
+</html>
